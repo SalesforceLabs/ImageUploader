@@ -1,0 +1,135 @@
+/*
+ * Copyright (c) 2020, salesforce.com, inc.
+ * All rights reserved.
+ * SPDX-License-Identifier: BSD-3-Clause
+ * For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
+ */
+.card-title {
+  white-space: normal;
+}
+
+.image-container {
+  background-color: #dddbda;
+  width: 100%;
+}
+
+.image-info {
+  word-break: break-word;
+  width: 100%;
+}
+
+.image-info-name {
+  width: 100%;
+}
+
+.image-info-details {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  padding-right: 0;
+  word-break: break-all;
+  margin-bottom: 0;
+  padding: 0;
+}
+
+.image-info-actions {
+  width: 100%;
+}
+
+.list-first {
+  border-top: 1px solid lightgray;
+}
+
+.thumbnail {
+  cursor: pointer;
+}
+
+.no-wrap {
+  white-space: nowrap;
+}
+
+.search-select-area {
+  padding-right: var(--lwc-spacingXSmall, 0.5rem);
+  flex-grow: 1;
+}
+
+.order-select-area {
+  padding-left: 0;
+  padding-right: var(--lwc-spacingXSmall, 0.5rem);
+}
+
+.reload-area {
+  padding-left: 0;
+}
+
+.reload-area lightning-button-icon.slds-var-m-left_x-small {
+  margin: 0;
+}
+
+.status-badge {
+  font-size: .55rem;
+  font-weight: 400;
+}
+
+.image-info-actions-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.actions-button-group {
+  flex-grow: 1;
+  margin-bottom: .25rem;
+  margin-right: .5rem;
+}
+
+.input-toggle {
+  margin-top: .25rem;
+}
+
+/* List View Pattern */
+.listType-List {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: var(--lwc-spacingLarge, 1.5rem);
+  width: 100%;
+}
+
+.listType-List .image-container {
+  flex-grow: 1;
+  flex-shrink: 0;
+  flex-basis: calc(45% - var(--lwc-spacingMedium, 1rem));
+  margin: 0 var(--lwc-spacingMedium, 1rem) 0 0;
+}
+
+.listType-List .image-info-name {
+  margin-top: .25rem;
+}
+
+.listType-List .image-info {
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 55%;
+  margin: 0;
+}
+
+.listType-List .thumbnail {
+  max-height: 200px;
+  width: auto;
+}
+
+.card-container {
+  height: 100%;
+  max-height: 100%;
+  overflow: hidden;
+  display: block;
+  transition: max-height 300ms ease-out;
+}
+
+@media (max-width: 768px) {
+  .card-container.inModal {
+    max-height: 100vh;
+  }
+}

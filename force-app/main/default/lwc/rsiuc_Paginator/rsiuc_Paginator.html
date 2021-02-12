@@ -1,0 +1,16 @@
+<!--
+ * Copyright (c) 2020, salesforce.com, inc.
+ * All rights reserved.
+ * SPDX-License-Identifier: BSD-3-Clause
+ * For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
+ -->
+<template>
+    <lightning-layout pull-to-boundary="small">
+        <lightning-layout-item padding="horizontal-small">
+            <lightning-button label="前へ" icon-name="utility:chevronleft" onclick={previousHandler} class="previous"></lightning-button>
+        </lightning-layout-item>
+        <lightning-layout-item padding="horizontal-small">
+            <lightning-button label="次へ" icon-name="utility:chevronright" icon-position="right" onclick={nextHandler} class="next"></lightning-button>
+        </lightning-layout-item>
+    </lightning-layout>
+</template>

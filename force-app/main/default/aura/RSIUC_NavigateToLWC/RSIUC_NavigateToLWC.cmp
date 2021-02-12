@@ -1,0 +1,60 @@
+<!--
+ * Copyright (c) 2020, salesforce.com, inc.
+ * All rights reserved.
+ * SPDX-License-Identifier: BSD-3-Clause
+ * For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
+ -->
+<aura:component implements="lightning:isUrlAddressable" access="global">
+    <aura:attribute type="String" name="recordId"/>
+    <aura:attribute type="Integer" name="pageSize"/>
+    <aura:attribute type="String" name="pageType"/>
+    <aura:attribute type="String" name="linkId"/>
+    <aura:attribute type="String" name="sortField" default="LastModifiedDate"/>
+    <aura:attribute type="String" name="order" default="DESC"/>
+    <aura:attribute type="String" name="keyword" default=""/>
+    <aura:attribute type="String" name="communityId" default=""/>
+    <aura:attribute type="String" name="communityBaseUrl" default=""/>
+    <aura:attribute type="String" name="nameSpace" default=""/>
+    <aura:attribute type="String" name="acceptedFormatList" default="jpg, jpeg, png, ppt, pptx, xls, xlsx, doc, docx, pdf"/>
+    <aura:attribute type="Integer" name="offset"/>
+    <aura:attribute type="Integer" name="totalImages"/>
+    <aura:attribute type="Integer" name="initialSlide"/>
+    <aura:attribute type="String[]" name="contentIds" default="[]"/>
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+    <aura:handler name="change" value="{!v.pageReference}" action="{!c.reInit}" />
+    <div class="slds-card">
+        <aura:if isTrue="{!v.pageType == 'linkimage'}">
+            <c:rsiuc_LinkImageMobile
+                nameSpace="{!v.nameSpace}"
+                recordId="{!v.recordId}"
+                pageSize="{!v.pageSize}"
+                acceptedFormatList="{!v.acceptedFormatList}"
+            />
+        </aura:if>
+        <aura:if isTrue="{!v.pageType == 'carousel'}">
+            <c:rsiuc_ImageCarouselMobile
+                nameSpace="{!v.nameSpace}"
+                recordId="{!v.recordId}"
+                totalImages="{!v.totalImages}"
+                offset="{!v.offset}"
+                pageSize="{!v.pageSize}"
+                initialSlide="{!v.initialSlide}"
+                sortField="{!v.sortField}"
+                order="{!v.order}"
+                keyword="{!v.keyword}"
+                communityId="{!v.communityId}"
+                communityBaseUrl="{!v.communityBaseUrl}"
+                acceptedFormatList="{!v.acceptedFormatList}"
+            />
+        </aura:if>
+        <aura:if isTrue="{!v.pageType == 'editname'}">
+            <c:rsiuc_EditImageNameMobile
+                nameSpace="{!v.nameSpace}"
+                recordId="{!v.recordId}"
+                contentIds="{!v.contentIds}"
+                communityId="{!v.communityId}"
+                communityBaseUrl="{!v.communityBaseUrl}"
+            />
+        </aura:if>
+    </div>
+</aura:component>
