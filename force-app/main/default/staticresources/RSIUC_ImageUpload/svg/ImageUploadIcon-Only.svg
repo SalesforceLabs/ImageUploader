@@ -1,0 +1,17 @@
+<svg id="ImageUpload-Only" data-name="ImageUpload-Only" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 592.32 605.84">
+  <defs>
+    <clipPath id="clip-path" transform="translate(-63.68 -62)">
+      <rect x="63.68" y="62" width="592.32" height="481.26" style="fill:none" />
+    </clipPath>
+  </defs>
+  <rect x="0.06" y="567.99" width="592.2" height="37.85" rx="16.86" style="fill:#706e6a" />
+  <rect x="0.06" y="507.42" width="436.62" height="37.85" rx="16.86" style="fill:#706e6a" />
+  <g style="clip-path:url(#clip-path)">
+    <g style="clip-path:url(#clip-path)">
+      <rect x="17.28" y="17.28" width="557.76" height="446.7" rx="35.98" style="fill:#fff" />
+      <path d="M602.75,96.55a18.7,18.7,0,0,1,18.7,18.7V490a18.7,18.7,0,0,1-18.7,18.7H116.94A18.7,18.7,0,0,1,98.24,490V115.25a18.7,18.7,0,0,1,18.7-18.7H602.75m0-34.55H116.94a53.32,53.32,0,0,0-53.26,53.25V490a53.32,53.32,0,0,0,53.26,53.26H602.75A53.32,53.32,0,0,0,656,490V115.25A53.31,53.31,0,0,0,602.75,62" transform="translate(-63.68 -62)" style="fill:#706e6a" />
+      <path d="M578,203.42A63.43,63.43,0,1,1,514.59,140,63.42,63.42,0,0,1,578,203.42" transform="translate(-63.68 -62)" style="fill:#706e6a" />
+      <path d="M439.85,329.14,422.51,344c-14.87,9.91-14.87,9.91-26,0l-64.77-77.76c-23.19-25.06-31.86-23.82-59.22,7.1L94.12,492.67v30h534V495.14L486.93,331.62c-21.06-19.83-26-19.83-47.08-2.48" transform="translate(-63.68 -62)" style="fill:#706e6a" />
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,66 @@
+/*
+ * Copyright (c) 2020, salesforce.com, inc.
+ * All rights reserved.
+ * SPDX-License-Identifier: BSD-3-Clause
+ * For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
+ */
+.swiper-container {
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  background: #fff;
+  height: auto;
+
+  /* Center slide text vertically */
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+}
+
+.swiper-slide .title {
+  bottom: 0px;
+  left: 0px;
+  float: left;
+  position: absolute;
+  width: 100%;
+  z-index: 9999;
+  color: #fff;
+  font-size: 1em;
+}
+
+.title-wrapper {
+  word-break: break-word;
+  display: inline-flex;
+  padding: 5px;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.swiper-slide img {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: calc(100vh - 2rem);
+  left: 50%;
+  top: 50%;
+}
+
+.image-block {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

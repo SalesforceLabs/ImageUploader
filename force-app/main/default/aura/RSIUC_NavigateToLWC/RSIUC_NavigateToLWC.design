@@ -1,0 +1,6 @@
+<design:component label="RSIUC_NavigateToLWC">
+  <design:supportedFormFactors>
+    <design:supportedFormFactor type="Large"/>
+    <design:supportedFormFactor type="Small"/>
+  </design:supportedFormFactors>
+</design:component>
