@@ -5,52 +5,41 @@
  * For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  -->
 <template>
-    <div class="slds-var-p-around_medium">
-        <div if:true={isLoaded}>
-            <lightning-spinner
-                alternative-text="Loading...">
-            </lightning-spinner>
-        </div>
-        <template if:true={images.error}>
-            {images.error.body.message}
-        </template>
-        <template if:true={images.data}>
-            <template iterator:img={images.data}>
-                <lightning-layout key={img.value.Id} horizontal-align="spread" class="image-item">
-                    <lightning-layout-item size={layoutSettings.imageBlock} padding="around-small" class="slds-align_absolute-center">
-                        <template if:true={img.value.imageError}>
-                            <lightning-icon icon-name={img.value.defaultIcon} size="large"></lightning-icon>
-                        </template>
-                        <template if:false={img.value.imageError}>
-                            <img onerror={handleImageError} data-contentid={img.value.Id} key={img.value.Id} src={img.value.imageUrl}/>
-                        </template>
-                    </lightning-layout-item>
-                    <lightning-layout-item size={layoutSettings.infoBlock} padding="around-small" class="image-info">
-                        <lightning-layout multiple-rows="true">
-                            <lightning-layout-item size="12">
-                                <lightning-input name={img.value.Id} type="text" max-length="255" label="ファイル名" value={img.value.Title} onchange={onInputChange} required></lightning-input>
-                            </lightning-layout-item>
-                            <lightning-layout-item size="12">
-                                <lightning-formatted-date-time
-                                    value={img.value.LastModifiedDate}
-                                    year="numeric"
-                                    day="2-digit"
-                                    month="long"
-                                    hour="2-digit"
-                                    minute="2-digit">
-                                </lightning-formatted-date-time>
-                                <span class="slds-var-p-horizontal_xxx-small">/</span>
-                                <span>{img.value.contentSize}</span>
-                                <span class="slds-var-p-horizontal_xxx-small">/</span>
-                                <span>{img.value.fileExtension}</span>
-                            </lightning-layout-item>
-                        </lightning-layout>
-                    </lightning-layout-item>
-                </lightning-layout>
-            </template>
-        </template>
+  <div class="slds-var-p-around_medium">
+    <div if:true={isLoaded}>
+      <lightning-spinner alternative-text="Loading..."> </lightning-spinner>
     </div>
-    <footer class="slds-modal__footer">
-        <lightning-button variant="brand" label="完了" onclick={handleSaveClick} class="slds-var-m-left_x-small"></lightning-button>
-    </footer>
+    <template if:true={images.error}> {images.error.body.message} </template>
+    <template if:true={images.data}>
+      <template iterator:img={images.data}>
+        <lightning-layout key={img.value.Id} horizontal-align="spread" class="image-item">
+          <lightning-layout-item size={layoutSettings.imageBlock} padding="around-small" class="slds-align_absolute-center">
+            <template if:true={img.value.imageError}>
+              <lightning-icon icon-name={img.value.defaultIcon} size="large"></lightning-icon>
+            </template>
+            <template if:false={img.value.imageError}>
+              <img onerror={handleImageError} data-contentid={img.value.Id} key={img.value.Id} src={img.value.imageUrl} />
+            </template>
+          </lightning-layout-item>
+          <lightning-layout-item size={layoutSettings.infoBlock} padding="around-small" class="image-info">
+            <lightning-layout multiple-rows="true">
+              <lightning-layout-item size="12">
+                <lightning-input name={img.value.Id} type="text" max-length="255" label={label.EditImageNameMobile_FileName} value={img.value.Title} onchange={onInputChange} required></lightning-input>
+              </lightning-layout-item>
+              <lightning-layout-item size="12">
+                <lightning-formatted-date-time value={img.value.LastModifiedDate} year="numeric" day="2-digit" month="long" hour="2-digit" minute="2-digit"> </lightning-formatted-date-time>
+                <span class="slds-var-p-horizontal_xxx-small">/</span>
+                <span>{img.value.contentSize}</span>
+                <span class="slds-var-p-horizontal_xxx-small">/</span>
+                <span>{img.value.fileExtension}</span>
+              </lightning-layout-item>
+            </lightning-layout>
+          </lightning-layout-item>
+        </lightning-layout>
+      </template>
+    </template>
+  </div>
+  <footer class="slds-modal__footer">
+    <lightning-button variant="brand" label={label.EditImageNameMobile_FinishButton} onclick={handleSaveClick} class="slds-var-m-left_x-small"></lightning-button>
+  </footer>
 </template>

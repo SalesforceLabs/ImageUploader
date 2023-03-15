@@ -23,42 +23,90 @@ import { getObjectInfo } from 'lightning/uiObjectInfoApi';
 
 import RSIUC_ImageUploadResource from '@salesforce/resourceUrl/RSIUC_ImageUpload';
 
+import ImageListContainer_List from '@salesforce/label/c.ImageListContainer_List';
+import ImageListContainer_Column from '@salesforce/label/c.ImageListContainer_Column';
+import ImageListContainer_ConfirmText from '@salesforce/label/c.ImageListContainer_ConfirmText';
+import ImageListContainer_DeleteSuccess from '@salesforce/label/c.ImageListContainer_DeleteSuccess';
+import ImageListContainer_DeleteSuccessText from '@salesforce/label/c.ImageListContainer_DeleteSuccessText';
+import ImageListContainer_DeleteFailed from '@salesforce/label/c.ImageListContainer_DeleteFailed';
+import ImageListContainer_FileAdded from '@salesforce/label/c.ImageListContainer_FileAdded';
+import ImageListContainer_ChooseFile from '@salesforce/label/c.ImageListContainer_ChooseFile';
+import ImageListContainer_ListView from '@salesforce/label/c.ImageListContainer_ListView';
+import ImageListContainer_LargeAlt from '@salesforce/label/c.ImageListContainer_LargeAlt';
+import ImageListContainer_ListAlt from '@salesforce/label/c.ImageListContainer_ListAlt';
+import ImageListContainer_FileUpload from '@salesforce/label/c.ImageListContainer_FileUpload';
+import ImageListContainer_TitleSearch from '@salesforce/label/c.ImageListContainer_TitleSearch';
+import ImageListContainer_SortBy from '@salesforce/label/c.ImageListContainer_SortBy';
+import ImageListContainer_SortOrder from '@salesforce/label/c.ImageListContainer_SortOrder';
+import ImageListContainer_Reload from '@salesforce/label/c.ImageListContainer_Reload';
+import ImageListContainer_Download from '@salesforce/label/c.ImageListContainer_Download';
+import ImageListContainer_FieldSetting from '@salesforce/label/c.ImageListContainer_FieldSetting';
+import ImageListContainer_Delete from '@salesforce/label/c.ImageListContainer_Delete';
+import ImageListContainer_ShareSetting from '@salesforce/label/c.ImageListContainer_ShareSetting';
+import ImageListContainer_External from '@salesforce/label/c.ImageListContainer_External';
+import ImageListContainer_Internal from '@salesforce/label/c.ImageListContainer_Internal';
+
 export default class Rsiuc_ImageListContainer extends NavigationMixin(LightningElement) {
+  label = {
+    ImageListContainer_List,
+    ImageListContainer_Column,
+    ImageListContainer_ConfirmText,
+    ImageListContainer_DeleteSuccess,
+    ImageListContainer_DeleteSuccessText,
+    ImageListContainer_DeleteFailed,
+    ImageListContainer_FileAdded,
+    ImageListContainer_ChooseFile,
+    ImageListContainer_ListView,
+    ImageListContainer_LargeAlt,
+    ImageListContainer_ListAlt,
+    ImageListContainer_FileUpload,
+    ImageListContainer_TitleSearch,
+    ImageListContainer_SortBy,
+    ImageListContainer_SortOrder,
+    ImageListContainer_Reload,
+    ImageListContainer_Download,
+    ImageListContainer_FieldSetting,
+    ImageListContainer_Delete,
+    ImageListContainer_ShareSetting,
+    ImageListContainer_External,
+    ImageListContainer_Internal,
+  };
   URLITEM_FIELD = 'URL_item__c';
   nameSpace = '';
   @api recordId;
   @api communityId;
   @api communityBaseUrl;
+  @api appName = 'Image Uploader';
+  @api pageSize = 10;
   @api objectApiName;
   @api sortFieldApi = 'LastModifiedDate'; //並び替えで使用する項目名
-  @api defaultSort = '降順'; // or 昇順
-  @api targetUrlField = 'なし';
+  @api defaultSort = 'Descending order'; // or Ascending order
+  @api targetUrlField = 'None';
   @api isHideUpload = false;
   @api isHideFileEdit = false;
   @api isHideDelete = false;
   @api isHideShareButton = false;
   @api isHideSearchArea = false;
-  @api appName = '画像アップロード';
   @track images = {};
   @api isHideUrlItem = false;
   @api totalImages = 0;
   offset = 0;
-  @api pageSize = 10;
   @api isHideEditNameModal = false;
   isHideActionsArea = false;
   isLoaded = false;
   @api acceptedFormatList = `jpg, jpeg, png, ppt, pptx, xls, xlsx, doc, docx, pdf`;
+  @api disableIamgeDownload = false;
   acceptedFormats = [];
   isMobile = false;
   iconInfo = {
     List: {
-      label: 'リスト表示',
-      url: `${RSIUC_ImageUploadResource}/svg/ImageUploadIcon-List.svg#ImageUpload-List`
+      label: this.label.ImageListContainer_List,
+      url: `${RSIUC_ImageUploadResource}/svg/ImageUploadIcon-List.svg#ImageUpload-List`,
     },
     Image: {
-      label: '最大表示',
-      url: `${RSIUC_ImageUploadResource}/svg/ImageUploadIcon-Only.svg#ImageUpload-Only`
-    }
+      label: this.label.ImageListContainer_Column,
+      url: `${RSIUC_ImageUploadResource}/svg/ImageUploadIcon-Only.svg#ImageUpload-Only`,
+    },
   };
   @api selectedSvgIconType;
   @api selectedSvgIconUrl;
@@ -94,7 +142,7 @@ export default class Rsiuc_ImageListContainer extends NavigationMixin(LightningE
 
   //Executes on the page load
   connectedCallback() {
-    const _selectedSvgIconType = this.selectedSvgIconType == 'リスト表示' ? 'List' : 'Image';
+    const _selectedSvgIconType = this.selectedSvgIconType == 'Small' ? 'List' : 'Image';
     const _acceptedFormatList = [];
     if (this.acceptedFormatList && this.acceptedFormatList.length > 0) {
       this.acceptedFormatList.split(',').forEach((item) => {
@@ -102,18 +150,21 @@ export default class Rsiuc_ImageListContainer extends NavigationMixin(LightningE
       });
     }
     this.acceptedFormats = _acceptedFormatList;
-    this.defaultSort = '降順' == this.defaultSort ? 'DESC' : 'ASC';
+    this.defaultSort = 'Descending order' == this.defaultSort ? 'DESC' : 'ASC';
     this.isCommunity = this.communityId && this.communityBaseUrl;
     this.isHideShareButton = this.isHideShareButton || this.isCommunity;
     this.isHideActionsArea = this.isHideUrlItem && this.isHideDelete && this.isHideShareButton;
-    this.orderValue = [{ label: '昇順', value: 'ASC', selected: 'ASC' == this.defaultSort }, { label: '降順', value: 'DESC', selected: 'DESC' == this.defaultSort }];
+    this.orderValue = [
+      { label: 'Ascending order', value: 'ASC', selected: 'ASC' == this.defaultSort },
+      { label: 'Descending order', value: 'DESC', selected: 'DESC' == this.defaultSort },
+    ];
     this.selectedSvgIconUrl = this.iconInfo[_selectedSvgIconType].url;
     this.listTypeClassName = `listType-${_selectedSvgIconType}`;
     this.listSvgIconUrl = this.iconInfo.List.url;
     this.imageSvgIconUrl = this.iconInfo.Image.url;
     this.isMobile = formFactorPropertyName === 'Small';
+    this.disableIamgeDownload = this.disableIamgeDownload || this.isMobile;
     this.URLITEM_FIELD = String(URLITEM_FIELD.fieldApiName).split('.')[1];
-    this.isHideFileEdit = this.isHideFileEdit || this.isHideUpload;
     this.getAllFeilds();
   }
 
@@ -227,20 +278,20 @@ export default class Rsiuc_ImageListContainer extends NavigationMixin(LightningE
   handleDeleteClick(event) {
     let recId = event.target.dataset.id;
 
-    if (confirm('ファイルの添付を解除しますか?')) {
+    if (confirm(this.label.ImageListContainer_ConfirmText)) {
       this.isLoaded = true;
       deleteImageFromRecord({ contentLinkId: recId })
         .then((result) => {
           let deleteResult = JSON.parse(result);
           if (deleteResult.success) {
-            showToast(this, '画像の削除に成功しました。', 'レコードから画像を削除できました。', 'success');
+            showToast(this, this.label.ImageListContainer_DeleteSuccess, this.label.ImageListContainer_DeleteSuccessText, 'success');
 
             this.offset = 0;
             this.calculateTotalImage();
             this.getImagesList();
           } else {
             for (let i = 0; i < deleteResult.errors.length; i++) {
-              showToast(this, '画像の削除に失敗しました。', deleteResult.errors[i].message, 'error');
+              showToast(this, this.label.ImageListContainer_DeleteFailed, deleteResult.errors[i].message, 'error');
             }
           }
           this.images.error = undefined;
@@ -248,7 +299,7 @@ export default class Rsiuc_ImageListContainer extends NavigationMixin(LightningE
         })
         .catch((error) => {
           this.isLoaded = false;
-          showToast(this, '画像の削除に失敗しました。', error.body.message, 'error');
+          showToast(this, this.label.ImageListContainer_DeleteFailed, error.body.message, 'error');
         });
     }
   }
@@ -260,15 +311,15 @@ export default class Rsiuc_ImageListContainer extends NavigationMixin(LightningE
       this[NavigationMixin.Navigate]({
         type: 'standard__component',
         attributes: {
-          componentName: componentName
+          componentName: componentName,
         },
         state: {
           c__recordId: this.recordId,
           c__pageSize: this.pageSize,
           c__pageType: 'linkimage',
           c__nameSpace: this.nameSpace,
-          c__acceptedFormatList: this.acceptedFormatList
-        }
+          c__acceptedFormatList: this.acceptedFormatList,
+        },
       });
     } else {
       this.template.querySelector('c-rsiuc_-Link-Image-Modal').openModal();
@@ -284,15 +335,15 @@ export default class Rsiuc_ImageListContainer extends NavigationMixin(LightningE
       this[NavigationMixin.Navigate]({
         type: 'standard__component',
         attributes: {
-          componentName: componentName
+          componentName: componentName,
         },
         state: {
           c__recordId: this.recordId,
           c__contentIds: contentIds.toString(),
           c__pageType: 'editname',
           c__nameSpace: this.nameSpace,
-          c__acceptedFormatList: this.acceptedFormatList
-        }
+          c__acceptedFormatList: this.acceptedFormatList,
+        },
       });
     } else {
       this.template.querySelector('c-rsiuc_-Edit-Image-Name-Modal').openModal(contentIds);
@@ -308,12 +359,12 @@ export default class Rsiuc_ImageListContainer extends NavigationMixin(LightningE
 
   handleUploadFinished(event) {
     const files = event.detail.files || [];
-    showToast(this, '', 'ファイルが追加されました', 'success');
+    showToast(this, '', this.label.ImageListContainer_FileAdded, 'success');
     this.isLoaded = true;
     this.offset = 0;
 
     // 関連ファイルがなく、アップロードされたファイルが1つだけの場合、指定した項目に自動的に登録する
-    if (files.length === 1 && this.totalImages === 0 && this.targetUrlField && this.targetUrlField != 'なし') {
+    if (files.length === 1 && this.totalImages === 0 && this.targetUrlField && !/None|なし/i.test(this.targetUrlField)) {
       const targetItemId = files[0].documentId;
 
       getImagesByContentDocumentIds({ contentIds: targetItemId }).then((getImagesByContentDocumentIdsResult) => {
@@ -330,7 +381,7 @@ export default class Rsiuc_ImageListContainer extends NavigationMixin(LightningE
               })
               .catch((error) => {
                 // this.error = reduceErrors(error);
-                showToast(this, 'エラー', reduceErrors(error), 'error');
+                showToast(this, 'Error', reduceErrors(error), 'error');
                 this.isLoaded = false;
               });
           });
@@ -367,7 +418,7 @@ export default class Rsiuc_ImageListContainer extends NavigationMixin(LightningE
       this[NavigationMixin.Navigate]({
         type: 'standard__component',
         attributes: {
-          componentName: componentName
+          componentName: componentName,
         },
         state: {
           c__recordId: this.recordId,
@@ -382,8 +433,8 @@ export default class Rsiuc_ImageListContainer extends NavigationMixin(LightningE
           c__communityId: this.communityId,
           c__communityBaseUrl: this.communityBaseUrl,
           c__nameSpace: this.nameSpace,
-          c__acceptedFormatList: this.acceptedFormatList
-        }
+          c__acceptedFormatList: this.acceptedFormatList,
+        },
       });
     } else {
       this.template.querySelector('c-rsiuc_-Image-Carousel-Modal').openModal(imageIndex);
@@ -509,8 +560,8 @@ export default class Rsiuc_ImageListContainer extends NavigationMixin(LightningE
       {
         contentDocumentId: event.target.value,
         isBelongToRecord: true,
-        visibility: event.target.checked ? 'AllUsers' : 'InternalUsers'
-      }
+        visibility: event.target.checked ? 'AllUsers' : 'InternalUsers',
+      },
     ];
 
     linkImageToRecord({ recordId: this.recordId, imageUrlWrappers: imageWrappers })

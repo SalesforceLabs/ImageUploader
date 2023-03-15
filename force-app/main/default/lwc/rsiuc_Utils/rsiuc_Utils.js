@@ -6,7 +6,7 @@
  */
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import LOGO_ICON from '@salesforce/resourceUrl/RSIUC_ImageUpload';
-
+import UnknownError from '@salesforce/label/c.UnknownError';
 /**
  * Format bytes to string like 1MB, 560KB
  */
@@ -29,7 +29,7 @@ export function showToast(cmp, title, message, variant) {
   const event = new ShowToastEvent({
     title: title,
     message: message,
-    variant: variant
+    variant: variant,
   });
   cmp.dispatchEvent(event);
 }
@@ -69,7 +69,7 @@ export function reduceErrors(error) {
   } else if (typeof error.body.message === 'string') {
     return error.body.message;
   }
-  return '不明なエラーが発生しました。';
+  return UnknownError;
 }
 
 /**

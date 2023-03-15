@@ -5,84 +5,65 @@
  * For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  -->
 <template>
-    <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1">
-        <div class="slds-modal__container">
-            <header class="slds-modal__header">
-                <lightning-input
-                    label="検索するキーワードを入力してください"
-                    type="search"
-                    max-length="80"
-                    onchange={handleSearchChangeValue}>
-                ></lightning-input>
-            </header>
-            <div class="slds-modal__content slds-var-p-around_medium" id="modal-content-id-1">
-                <div if:true={isLoaded}>
-                    <lightning-spinner
-                        alternative-text="Loading...">
-                    </lightning-spinner>
-                </div>
-                <template if:true={images.error}>
-                    {images.error.body.message}
-                </template>
-                <div class="modal-inner">
-                    <template if:true={images.data}>
-                        <template iterator:img={images.data}>
-                            <lightning-layout key={img.value.contentDocument.Id} horizontal-align="spread" class="image-item">
-                                <lightning-layout-item size={layoutSettings.checkBoxBlock} padding="around-small" class="slds-align_absolute-center">
-                                    <lightning-button-icon-stateful icon-name="utility:check" selected={img.value.isBelongToRecord} onclick={handleCheckButtonClick}  data-imageid={img.value.contentDocument.Id}></lightning-button-icon-stateful>
-                                </lightning-layout-item>
-                                <lightning-layout-item size={layoutSettings.imageBlock} padding="around-small" class="slds-align_absolute-center">
-                                    <template if:true={img.value.contentDocument.imageError}>
-                                        <lightning-icon icon-name={img.value.contentDocument.defaultIcon} size="large"></lightning-icon>
-                                    </template>
-                                    <template if:false={img.value.contentDocument.imageError}>
-                                        <img onerror={handleImageError} data-contentid={img.value.contentDocument.Id} key={img.value.contentDocument.Id} src={img.value.contentDocument.imageUrl}/>
-                                    </template>
-                                </lightning-layout-item>
-                                <lightning-layout-item size={layoutSettings.infoBlock} padding="around-small" class="image-info">
-                                    <lightning-layout multiple-rows="true">
-                                        <lightning-layout-item size="12">
-                                            <template if:true={img.value.hasReadAccess}>
-                                                <a href={img.value.contentDocument.contentIdUrl} target="_blank" rel="noopener noreferrer">{img.value.contentDocument.Title}</a>
-                                            </template>
-                                            <template if:false={img.value.hasReadAccess}>
-                                                {img.value.contentDocument.Title}
-                                            </template>
-                                        </lightning-layout-item>
-                                        <lightning-layout-item size="12">
-                                            <lightning-formatted-date-time
-                                                value={img.value.contentDocument.LastModifiedDate}
-                                                year="numeric"
-                                                day="2-digit"
-                                                month="long"
-                                                hour="2-digit"
-                                                minute="2-digit">
-                                            </lightning-formatted-date-time>
-                                            <span class="slds-var-p-horizontal_xxx-small">/</span>
-                                            <span>{img.value.contentDocument.contentSize}</span>
-                                            <span class="slds-var-p-horizontal_xxx-small">/</span>
-                                            <span>{img.value.contentDocument.fileExtension}</span>
-                                        </lightning-layout-item>
-                                    </lightning-layout>
-                                </lightning-layout-item>
-                            </lightning-layout>
-                        </template>
-                    </template>
-                </div>
-            </div>
-            <footer class="slds-modal__footer">
-                <lightning-layout multiple-rows="true">
-                    <!--lightning-layout-item class="m-sm-auto">
+  <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1">
+    <div class="slds-modal__container">
+      <header class="slds-modal__header">
+        <lightning-input label={label.LinkImageMobile_InputSearchHelp} type="search" max-length="80" onchange={handleSearchChangeValue}> ></lightning-input>
+      </header>
+      <div class="slds-modal__content slds-var-p-around_medium" id="modal-content-id-1">
+        <div if:true={isLoaded}>
+          <lightning-spinner alternative-text="Loading..."> </lightning-spinner>
+        </div>
+        <template if:true={images.error}> {images.error.body.message} </template>
+        <div class="modal-inner">
+          <template if:true={images.data}>
+            <template iterator:img={images.data}>
+              <lightning-layout key={img.value.contentDocument.Id} horizontal-align="spread" class="image-item">
+                <lightning-layout-item size={layoutSettings.checkBoxBlock} padding="around-small" class="slds-align_absolute-center">
+                  <lightning-button-icon-stateful icon-name="utility:check" selected={img.value.isBelongToRecord} onclick={handleCheckButtonClick} data-imageid={img.value.contentDocument.Id}></lightning-button-icon-stateful>
+                </lightning-layout-item>
+                <lightning-layout-item size={layoutSettings.imageBlock} padding="around-small" class="slds-align_absolute-center">
+                  <template if:true={img.value.contentDocument.imageError}>
+                    <lightning-icon icon-name={img.value.contentDocument.defaultIcon} size="large"></lightning-icon>
+                  </template>
+                  <template if:false={img.value.contentDocument.imageError}>
+                    <img onerror={handleImageError} data-contentid={img.value.contentDocument.Id} key={img.value.contentDocument.Id} src={img.value.contentDocument.imageUrl} />
+                  </template>
+                </lightning-layout-item>
+                <lightning-layout-item size={layoutSettings.infoBlock} padding="around-small" class="image-info">
+                  <lightning-layout multiple-rows="true">
+                    <lightning-layout-item size="12">
+                      <template if:true={img.value.hasReadAccess}>
+                        <a href={img.value.contentDocument.contentIdUrl} target="_blank" rel="noopener noreferrer">{img.value.contentDocument.Title}</a>
+                      </template>
+                      <template if:false={img.value.hasReadAccess}> {img.value.contentDocument.Title} </template>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12">
+                      <lightning-formatted-date-time value={img.value.contentDocument.LastModifiedDate} year="numeric" day="2-digit" month="long" hour="2-digit" minute="2-digit"> </lightning-formatted-date-time>
+                      <span class="slds-var-p-horizontal_xxx-small">/</span>
+                      <span>{img.value.contentDocument.contentSize}</span>
+                      <span class="slds-var-p-horizontal_xxx-small">/</span>
+                      <span>{img.value.contentDocument.fileExtension}</span>
+                    </lightning-layout-item>
+                  </lightning-layout>
+                </lightning-layout-item>
+              </lightning-layout>
+            </template>
+          </template>
+        </div>
+      </div>
+      <footer class="slds-modal__footer">
+        <lightning-layout multiple-rows="true">
+          <!--lightning-layout-item class="m-sm-auto">
                         <c-rsiuc_-Paginator onprevious={previousHandler} onnext={nextHandler}></c-rsiuc_-Paginator>
                     </lightning-layout-item-->
-                    <lightning-layout-item flexibility="grow" class="breakLineOnSm"></lightning-layout-item>
-                    <lightning-layout-item class="m-sm-auto mt-sm-1">
-                        <!-- <lightning-button variant="neutral" label="キャンセル" onclick={closeModal} ></lightning-button> -->
-                        <lightning-button variant="brand" label="完了" onclick={handleSaveClick}
-                        class="slds-var-m-left_x-small"></lightning-button>
-                    </lightning-layout-item>
-                </lightning-layout>
-            </footer>
-        </div>
-    </section>
+          <lightning-layout-item flexibility="grow" class="breakLineOnSm"></lightning-layout-item>
+          <lightning-layout-item class="m-sm-auto mt-sm-1">
+            <!-- <lightning-button variant="neutral" label={label.LinkImageMobile_CancelButton} onclick={closeModal} ></lightning-button> -->
+            <lightning-button variant="brand" label={label.LinkImageMobile_FinishButton} onclick={handleSaveClick} class="slds-var-m-left_x-small"></lightning-button>
+          </lightning-layout-item>
+        </lightning-layout>
+      </footer>
+    </div>
+  </section>
 </template>

@@ -16,53 +16,51 @@
           icon-name="utility:offline_briefcase"
           class="slds-var-m-left_x-small"
           variant="border-filled"
-          alternative-text="ファイル選択"
-          title="ファイル選択"
+          alternative-text={label.ImageListContainer_ChooseFile}
+          title={label.ImageListContainer_ChooseFile}
           size="medium"
-          onclick={handleLinkImageClick}>
+          onclick={handleLinkImageClick}
+        >
         </lightning-button-icon>
       </template>
       <div class="card-button__menu slds-dropdown-trigger slds-dropdown-trigger_click slds-var-m-left_x-small">
         <button
           class="card-button__menu-button slds-button slds-button_icon slds-button_icon-more"
           aria-haspopup="true"
-          title="表示切替"
+          title={label.ImageListContainer_ListView}
           type="button"
           onclick={handleIconMenuButtonClick}
           onblur={handleIconMenuButtonBlur}
-          onfocus={handleIconMenuButtonFocus}>
+          onfocus={handleIconMenuButtonFocus}
+        >
           <svg class="slds-button__icon" aria-hidden="true">
             <use xlink:href={selectedSvgIconUrl}></use>
           </svg>
           <svg class="slds-button__icon slds-button__icon_x-small" aria-hidden="true">
             <use xlink:href="/_slds/icons/utility-sprite/svg/symbols.svg#down"></use>
           </svg>
-          <span class="slds-assistive-text">表示切替</span>
+          <span class="slds-assistive-text">{label.ImageListContainer_ListView}</span>
         </button>
         <template if:true={_dropdownOpened}>
-          <div
-            class="slds-dropdown slds-dropdown_right slds-dropdown_xx-small"
-            onmouseover={cancelBlur}
-            onmouseout={allowBlur}
-            >
+          <div class="slds-dropdown slds-dropdown_right slds-dropdown_xx-small" onmouseover={cancelBlur} onmouseout={allowBlur}>
             <ul role="menu" aria-label="Show More">
               <li class="slds-dropdown__item" role="presentation">
                 <a onclick={handleMenuClick} class="card-button__menu-link" data-icon="Image" role="menuitem" tabindex="0">
-                  <span class="slds-truncate" title="大きく表示">
+                  <span class="slds-truncate" title={label.ImageListContainer_LargeAlt}>
                     <svg class="slds-icon slds-icon_small slds-icon-text-default slds-var-m-right_small" aria-hidden="true">
                       <use xlink:href={imageSvgIconUrl}></use>
                     </svg>
-                    最大表示
+                    {label.ImageListContainer_Column}
                   </span>
                 </a>
               </li>
               <li class="slds-dropdown__item" role="presentation">
                 <a onclick={handleMenuClick} class="card-button__menu-link" data-icon="List" role="menuitem" tabindex="-1">
-                  <span class="slds-truncate" title="リスト表示">
+                  <span class="slds-truncate" title={label.ImageListContainer_ListAlt}>
                     <svg class="slds-icon slds-icon_small slds-icon-text-default slds-var-m-right_small" aria-hidden="true">
                       <use xlink:href={listSvgIconUrl}></use>
                     </svg>
-                    リスト表示
+                    {label.ImageListContainer_List}
                   </span>
                 </a>
               </li>
@@ -74,114 +72,79 @@
     <div class="slds-var-m-top_small slds-var-m-bottom_medium slds-var-m-horizontal_medium">
       <template if:true={images.error}> {images.error.body.message} </template>
       <template if:false={isHideUpload}>
-        <lightning-file-upload
-          label="ファイルアップロード"
-          name="fileUploader"
-          class="slds-align_absolute-center slds-var-m-bottom_medium"
-          accept={acceptedFormats}
-          record-id={recordId}
-          onuploadfinished={handleUploadFinished}
-          multiple
-        >
+        <lightning-file-upload label={label.ImageListContainer_FileUpload} name="fileUploader" class="slds-align_absolute-center slds-var-m-bottom_medium" accept={acceptedFormats} record-id={recordId} onuploadfinished={handleUploadFinished} multiple>
         </lightning-file-upload>
       </template>
       <template if:true={images.data}>
-          <!-- Border -->
-          <template if:false={isHideFileEdit}>
-            <div class="list-first"></div>
-          </template>
+        <!-- Border -->
+        <template if:false={isHideUpload}>
+          <div class="list-first"></div>
+        </template>
 
-          <template if:false={isHideSearchArea}>
-            <!-- Text Filter -->
-            <div class="slds-var-m-top_small" onkeyup={handleSearchKeyUp}>
-                <lightning-input
-                    value={searchKeyword}
-                    name="input-search"
-                    label="タイトル検索"
-                    max-length="80"
-                    type="search"
-                    onchange={handleSearchChangeValue}>
-                </lightning-input>
-            </div>
+        <template if:false={isHideSearchArea}>
+          <!-- Text Filter -->
+          <div class="slds-var-m-top_small" onkeyup={handleSearchKeyUp}>
+            <lightning-input value={searchKeyword} name="input-search" label={label.ImageListContainer_TitleSearch} max-length="80" type="search" onchange={handleSearchChangeValue}> </lightning-input>
+          </div>
 
-            <!-- Search Order -->
-            <div class="slds-grid slds-nowrap slds-gutters slds-grid_align-spread slds-var-m-top_x-small">
-              <div class="search-select-area slds-col slds-size_7-of-12 slds-align-bottom">
-                <div class="slds-form-element">
-                  <label class="slds-form-element__label" for="search-area">並替え項目</label>
-                  <div class="slds-form-element__control">
-                    <div class="slds-select_container">
-                      <select class="slds-select" id="search-area" onchange={handleSearchFieldChange}>
-                        <template for:each={pickListValue} for:item="option">
-                          <template if:true={option.selected}>
-                            <option key={option.value} value={option.value} selected>{option.label}</option>
-                          </template>
-                          <template if:false={option.selected}>
-                            <option key={option.value} value={option.value}>{option.label}</option>
-                          </template>
+          <!-- Search Order -->
+          <div class="slds-grid slds-nowrap slds-gutters slds-grid_align-spread slds-var-m-top_x-small">
+            <div class="search-select-area slds-col slds-size_7-of-12 slds-align-bottom">
+              <div class="slds-form-element">
+                <label class="slds-form-element__label" for="search-area">{label.ImageListContainer_SortBy}</label>
+                <div class="slds-form-element__control">
+                  <div class="slds-select_container">
+                    <select class="slds-select" id="search-area" onchange={handleSearchFieldChange}>
+                      <template for:each={pickListValue} for:item="option">
+                        <template if:true={option.selected}>
+                          <option key={option.value} value={option.value} selected>{option.label}</option>
                         </template>
-                      </select>
-                    </div>
+                        <template if:false={option.selected}>
+                          <option key={option.value} value={option.value}>{option.label}</option>
+                        </template>
+                      </template>
+                    </select>
                   </div>
                 </div>
               </div>
-              <div class="order-select-area slds-col slds-size_3-of-12 slds-align-bottom slds-col_bump-right">
-                <div class="slds-form-element">
-                  <label class="slds-form-element__label" for="search-order">並替え順</label>
-                  <div class="slds-form-element__control">
-                    <div class="slds-select_container">
-                      <select class="slds-select" id="search-order" onchange={handleSearchOrderChange}>
-                        <template for:each={orderValue} for:item="option">
-                          <template if:true={option.selected}>
-                            <option key={option.value} value={option.value} selected>{option.label}</option>
-                          </template>
-                          <template if:false={option.selected}>
-                            <option key={option.value} value={option.value}>{option.label}</option>
-                          </template>
+            </div>
+            <div class="order-select-area slds-col slds-size_3-of-12 slds-align-bottom slds-col_bump-right">
+              <div class="slds-form-element">
+                <label class="slds-form-element__label" for="search-order">{label.ImageListContainer_SortOrder}</label>
+                <div class="slds-form-element__control">
+                  <div class="slds-select_container">
+                    <select class="slds-select" id="search-order" onchange={handleSearchOrderChange}>
+                      <template for:each={orderValue} for:item="option">
+                        <template if:true={option.selected}>
+                          <option key={option.value} value={option.value} selected>{option.label}</option>
                         </template>
-                      </select>
-                    </div>
+                        <template if:false={option.selected}>
+                          <option key={option.value} value={option.value}>{option.label}</option>
+                        </template>
+                      </template>
+                    </select>
                   </div>
                 </div>
               </div>
-
-              <!-- Reload -->
-              <div class="reload-area slds-col slds-align-bottom">
-                <lightning-button-icon
-                  icon-name="utility:refresh"
-                  class="slds-var-m-left_x-small"
-                  variant="border-filled"
-                  alternative-text="更新"
-                  title="更新"
-                  size="medium"
-                  onclick={handleReloadClick}>
-                </lightning-button-icon>
-              </div>
             </div>
-          </template>
 
-          <template iterator:img={images.data}>
+            <!-- Reload -->
+            <div class="reload-area slds-col slds-align-bottom">
+              <lightning-button-icon icon-name="utility:refresh" class="slds-var-m-left_x-small" variant="border-filled" alternative-text={label.ImageListContainer_Reload} title={label.ImageListContainer_Reload} size="medium" onclick={handleReloadClick}>
+              </lightning-button-icon>
+            </div>
+          </div>
+        </template>
+
+        <template iterator:img={images.data}>
           <!-- Contents -->
           <lightning-layout class={listTypeClassName} key={img.value.Id} horizontal-align="spread" multiple-rows="true">
             <lightning-layout-item class="image-container slds-align_absolute-center slds-var-m-top_x-large">
               <template if:true={img.value.imageError}>
-                <lightning-icon
-                  icon-name={img.value.defaultIcon}
-                  size="large"
-                  onclick={handleImageClick}
-                  data-imageindex={img.index}
-                  class="thumbnail slds-var-p-top_small slds-var-p-bottom_small"
-                ></lightning-icon>
+                <lightning-icon icon-name={img.value.defaultIcon} size="large" onclick={handleImageClick} data-imageindex={img.index} class="thumbnail slds-var-p-top_small slds-var-p-bottom_small"></lightning-icon>
               </template>
               <template if:false={img.value.imageError}>
-                <img
-                  onerror={handleImageError}
-                  src={img.value.imageUrl}
-                  onclick={handleImageClick}
-                  data-imageindex={img.index}
-                  data-linkid={img.value.Id}
-                  class="thumbnail"
-                />
+                <img onerror={handleImageError} src={img.value.imageUrl} onclick={handleImageClick} data-imageindex={img.index} data-linkid={img.value.Id} class="thumbnail" />
               </template>
             </lightning-layout-item>
             <lightning-layout-item class="image-info slds-var-m-top_xx-small">
@@ -190,23 +153,14 @@
                   <a href={img.value.contentIdUrl} target="_blank" rel="noopener noreferrer">{img.value.ContentDocument.Title}</a>
                 </lightning-layout-item>
                 <lightning-layout-item class="image-info-details slds-var-m-top_x-small">
-                  <lightning-formatted-date-time
-                    class="no-wrap"
-                    value={img.value.ContentDocument.LastModifiedDate}
-                    year="numeric"
-                    day="2-digit"
-                    month="long"
-                    hour="2-digit"
-                    minute="2-digit"
-                  >
-                  </lightning-formatted-date-time>
+                  <lightning-formatted-date-time value={img.value.ContentDocument.LastModifiedDate} year="numeric" day="2-digit" month="short" hour="2-digit" minute="2-digit"> </lightning-formatted-date-time>
                   <span class="slds-var-p-horizontal_xxx-small">/</span>
                   <span class="no-wrap">{img.value.contentSize}</span>
                   <span class="slds-var-p-horizontal_xxx-small">/</span>
                   <span class="no-wrap">{img.value.fileExtension}</span>
-                  <template if:false={isMobile}>
+                  <template if:false={disableIamgeDownload}>
                     <span class="slds-var-p-horizontal_xxx-small">/</span>
-                    <span class="no-wrap"><a href={img.value.downloadUrl} target="_blank" rel="noopener noreferrer">ダウンロード</a></span>
+                    <span class="no-wrap"><a href={img.value.downloadUrl} target="_blank" rel="noopener noreferrer">{label.ImageListContainer_Download}</a></span>
                   </template>
                 </lightning-layout-item>
                 <template if:true={img.value.hasUrlItem}>
@@ -221,32 +175,23 @@
                     <div class="image-info-actions-inner">
                       <lightning-button-group class="actions-button-group">
                         <template if:false={isHideUrlItem}>
-                          <lightning-button
-                            data-id={img.value.Id}
-                            label="項目設定"
-                            onclick={handleUrlItemClick}
-                          ></lightning-button>
+                          <lightning-button data-id={img.value.Id} label={label.ImageListContainer_FieldSetting} onclick={handleUrlItemClick}></lightning-button>
                         </template>
                         <template if:false={isHideDelete}>
-                          <lightning-button
-                            data-id={img.value.Id}
-                            variant="destructive-text"
-                            label="削除"
-                            onclick={handleDeleteClick}
-                          ></lightning-button>
+                          <lightning-button data-id={img.value.Id} variant="destructive-text" label={label.ImageListContainer_Delete} onclick={handleDeleteClick}></lightning-button>
                         </template>
                       </lightning-button-group>
                       <template if:false={isHideShareButton}>
                         <lightning-input
                           class="input-toggle"
                           type="toggle"
-                          label="公開設定"
-                          aria-label="公開設定"
+                          label={label.ImageListContainer_ShareSetting}
+                          aria-label={label.ImageListContainer_ShareSetting}
                           name="shared-type"
                           value={img.value.ContentDocumentId}
                           variant="label-hidden"
-                          message-toggle-active="外部公開"
-                          message-toggle-inactive="社内のみ"
+                          message-toggle-active={label.ImageListContainer_External}
+                          message-toggle-inactive={label.ImageListContainer_Internal}
                           checked={img.value.isAllUsers}
                           onchange={handleSharedToggle}
                         ></lightning-input>
@@ -260,13 +205,7 @@
         </template>
       </template>
       <template if:false={isHideEditNameModal}>
-        <c-rsiuc_-Edit-Image-Name-Modal
-          record-id={recordId}
-          total-images={totalImages}
-          onfinish={finishLinkHandler}
-          community-id={communityId}
-          community-base-url={communityBaseUrl}
-        ></c-rsiuc_-Edit-Image-Name-Modal>
+        <c-rsiuc_-Edit-Image-Name-Modal record-id={recordId} total-images={totalImages} onfinish={finishLinkHandler} community-id={communityId} community-base-url={communityBaseUrl}></c-rsiuc_-Edit-Image-Name-Modal>
       </template>
       <c-rsiuc_-Link-Image-Modal
         record-id={recordId}
@@ -292,14 +231,7 @@
         accepted-format-list={acceptedFormatList}
       ></c-rsiuc_-Image-Carousel-Modal>
       <template if:false={isHideUrlItem}>
-        <c-rsiuc_-Url-Setting-Modal
-          record-id={recordId}
-          onfinish={finishUrlItemHandler}
-          community-id={communityId}
-          community-base-url={communityBaseUrl}
-          object-api-name={objectApiName}
-          onchangemodal={onChangeModalHandler}
-        ></c-rsiuc_-Url-Setting-Modal>
+        <c-rsiuc_-Url-Setting-Modal record-id={recordId} onfinish={finishUrlItemHandler} community-id={communityId} community-base-url={communityBaseUrl} object-api-name={objectApiName} onchangemodal={onChangeModalHandler}></c-rsiuc_-Url-Setting-Modal>
       </template>
     </div>
     <div slot="footer">

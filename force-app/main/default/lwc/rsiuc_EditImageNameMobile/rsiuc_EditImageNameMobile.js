@@ -10,7 +10,16 @@ import updateContentDocumentName from '@salesforce/apex/RSIUC_ImageUploadControl
 import { generateInfoTextForImage, getPreviewUrlFromFileType, getDefaultIconFromFileType, formatBytes } from 'c/rsiuc_Utils';
 import { NavigationMixin } from 'lightning/navigation';
 
+import EditImageNameMobile_TryAgain from '@salesforce/label/c.EditImageNameMobile_TryAgain';
+import EditImageNameMobile_FileName from '@salesforce/label/c.EditImageNameMobile_FileName';
+import EditImageNameMobile_FinishButton from '@salesforce/label/c.EditImageNameMobile_FinishButton';
+
 export default class rsiuc_EditImageNameMobile extends NavigationMixin(LightningElement) {
+  label = {
+    EditImageNameMobile_TryAgain,
+    EditImageNameMobile_FileName,
+    EditImageNameMobile_FinishButton,
+  };
   @api recordId;
   @api contentIds;
   @api communityId;
@@ -21,7 +30,7 @@ export default class rsiuc_EditImageNameMobile extends NavigationMixin(Lightning
   isLoaded = false;
   layoutSettings = {
     imageBlock: 2,
-    infoBlock: 10
+    infoBlock: 10,
   };
 
   //Executes on the page load
@@ -59,7 +68,7 @@ export default class rsiuc_EditImageNameMobile extends NavigationMixin(Lightning
   handleSaveClick() {
     let allValid = this.validateInput();
     if (!allValid) {
-      alert('有効な値を入力してからもう一度試してください。');
+      alert(this.label.EditImageNameMobile_TryAgain);
       return;
     }
 
@@ -118,8 +127,8 @@ export default class rsiuc_EditImageNameMobile extends NavigationMixin(Lightning
       type: 'standard__recordPage',
       attributes: {
         recordId: this.recordId,
-        actionName: 'view'
-      }
+        actionName: 'view',
+      },
     });
   }
 }

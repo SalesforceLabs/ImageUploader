@@ -12,17 +12,18 @@ export default class Rsiuc_ImageListCommunityContainer extends LightningElement 
   @api recordId;
   @api communityId = Id;
   @api communityBaseUrl = BasePath;
-  @api appName = '画像アップロード';
+  @api appName = 'Image Uploader';
   @api pageSize = '10';
   @api sortFieldApi = 'LastModifiedDate';
-  @api defaultSort = '降順';
-  @api targetUrlField = 'なし';
-  @api selectedSvgIconType = 'リスト表示';
+  @api defaultSort = 'Descending order';
+  @api targetUrlField = 'None';
+  @api selectedSvgIconType = 'Small';
   @api isHideUpload = false;
   @api isHideSearchArea = false;
   @api isHideFileEdit = false;
   @api isHideUrlItem = false;
   @api isHideEditNameModal = false;
+  @api isHideShareButton = false;
   @api isHideDelete = false;
   @api acceptedFormatList = `jpg, jpeg, png, ppt, pptx, xls, xlsx, doc, docx, pdf`;
 }

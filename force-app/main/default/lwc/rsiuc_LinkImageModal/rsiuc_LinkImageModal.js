@@ -11,7 +11,21 @@ import linkImageToRecord from '@salesforce/apex/RSIUC_ImageUploadController.link
 import getBase64Image from '@salesforce/apex/RSIUC_ImageUploadController.getBase64Image';
 import { generateInfoTextForImage, getPreviewUrlFromFileType, getDefaultIconFromFileType, formatBytes } from 'c/rsiuc_Utils';
 
+import LinkImageModal_Close from '@salesforce/label/c.LinkImageModal_Close';
+import LinkImageModal_SelectFile from '@salesforce/label/c.LinkImageModal_SelectFile';
+import LinkImageModal_InputSearchHelp from '@salesforce/label/c.LinkImageModal_InputSearchHelp';
+import LinkImageModal_CancelButton from '@salesforce/label/c.LinkImageModal_CancelButton';
+import LinkImageModal_FinishButton from '@salesforce/label/c.LinkImageModal_FinishButton';
+
 export default class Rsiuc_LinkImageModal extends LightningElement {
+  label = {
+    LinkImageModal_Close,
+    LinkImageModal_SelectFile,
+    LinkImageModal_InputSearchHelp,
+    LinkImageModal_CancelButton,
+    LinkImageModal_FinishButton,
+  };
+
   showModal = false;
   @api recordId;
   @api communityId;
@@ -27,7 +41,7 @@ export default class Rsiuc_LinkImageModal extends LightningElement {
   layoutSettings = {
     checkBoxBlock: 1,
     imageBlock: 1,
-    infoBlock: 10
+    infoBlock: 10,
   };
 
   //Executes on the page load

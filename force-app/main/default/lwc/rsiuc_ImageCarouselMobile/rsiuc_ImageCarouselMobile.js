@@ -55,13 +55,13 @@ export default class Rsiuc_ImageCarouselMobile extends LightningElement {
     // invoke the method when component rendered or loaded
     Promise.all([
       loadStyle(this, swiperResource + '/SwiperJS/swiper-bundle.css'), // CSS File
-      loadScript(this, swiperResource + '/SwiperJS/swiper-bundle.js') // JS file
+      loadScript(this, swiperResource + '/SwiperJS/swiper-bundle.js'), // JS file
     ])
       .then(() => {
         // Call back function if scripts loaded successfully
       })
       .catch((error) => {
-        showToast(this, 'エラー', error.message, 'error');
+        showToast(this, 'Error', error.message, 'error');
       });
   }
 
@@ -72,13 +72,13 @@ export default class Rsiuc_ImageCarouselMobile extends LightningElement {
     this.swiper = new Swiper(this.template.querySelector('.swiper-container'), {
       init: false,
       lazy: {
-        loadOnTransitionStart: true
+        loadOnTransitionStart: true,
       },
       initialSlide: this.initialSlide,
       navigation: {
         nextEl: this.template.querySelector('.swiper-button-next'),
-        prevEl: this.template.querySelector('.swiper-button-prev')
-      }
+        prevEl: this.template.querySelector('.swiper-button-prev'),
+      },
     });
     this.swiper.on('init', () => {
       for (let i = this.images.data.length - 1; i >= 0; i--) {
@@ -179,6 +179,14 @@ export default class Rsiuc_ImageCarouselMobile extends LightningElement {
   }
 
   generateDivSwiper(imageUrl, title, fileType) {
-    return `<div c-rsiuc_imagecarouselmodal_rsiuc_imagecarouselmodal="" class="swiper-slide"><div class="image-block"><img c-rsiuc_imagecarouselmodal_rsiuc_imagecarouselmodal="" data-filetype="${fileType}" data-src="${imageUrl}" class="swiper-lazy"></div><div c-rsiuc_imagecarouselmodal_rsiuc_imagecarouselmodal="" class="title"><div class="title-wrapper">${title}</div></div><div c-rsiuc_imagecarouselmodal_rsiuc_imagecarouselmodal="" class="swiper-lazy-preloader"></div></div>`;
+    return `<div c-rsiuc_imagecarouselmodal_rsiuc_imagecarouselmodal="" class="swiper-slide">
+      <div class="image-block">
+        <img c-rsiuc_imagecarouselmodal_rsiuc_imagecarouselmodal="" data-filetype="${fileType}" data-src="${imageUrl}" class="swiper-lazy" />
+      </div>
+      <div c-rsiuc_imagecarouselmodal_rsiuc_imagecarouselmodal="" class="title">
+        <div class="title-wrapper">${title}</div>
+      </div>
+      <div c-rsiuc_imagecarouselmodal_rsiuc_imagecarouselmodal="" class="swiper-lazy-preloader"></div>
+    </div>`;
   }
 }

@@ -12,7 +12,17 @@ import getBase64Image from '@salesforce/apex/RSIUC_ImageUploadController.getBase
 import { generateInfoTextForImage, getPreviewUrlFromFileType, getDefaultIconFromFileType, formatBytes } from 'c/rsiuc_Utils';
 import { NavigationMixin } from 'lightning/navigation';
 
+import LinkImageMobile_InputSearchHelp from '@salesforce/label/c.LinkImageMobile_InputSearchHelp';
+import LinkImageMobile_CancelButton from '@salesforce/label/c.LinkImageMobile_CancelButton';
+import LinkImageMobile_FinishButton from '@salesforce/label/c.LinkImageMobile_FinishButton';
+
 export default class Rsiuc_LinkImageMobile extends NavigationMixin(LightningElement) {
+  label = {
+    LinkImageMobile_InputSearchHelp,
+    LinkImageMobile_CancelButton,
+    LinkImageMobile_FinishButton,
+  };
+
   @api recordId;
   @api pageSize;
   @api nameSpace = '';
@@ -25,7 +35,7 @@ export default class Rsiuc_LinkImageMobile extends NavigationMixin(LightningElem
   layoutSettings = {
     checkBoxBlock: 2,
     imageBlock: 4,
-    infoBlock: 6
+    infoBlock: 6,
   };
   //Executes on the page load
   connectedCallback() {
@@ -199,8 +209,8 @@ export default class Rsiuc_LinkImageMobile extends NavigationMixin(LightningElem
       type: 'standard__recordPage',
       attributes: {
         recordId: this.recordId,
-        actionName: 'view'
-      }
+        actionName: 'view',
+      },
     });
   }
 }

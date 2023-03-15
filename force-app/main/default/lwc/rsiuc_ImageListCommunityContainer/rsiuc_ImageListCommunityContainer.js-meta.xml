@@ -6,77 +6,32 @@
  * For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  -->
 <LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
-    <apiVersion>50.0</apiVersion>
-    <isExposed>true</isExposed>
-    <masterLabel>Image Uploader</masterLabel>
-    <targets>
-        <target>lightningCommunity__Page</target>
-        <target>lightningCommunity__Default</target>
-    </targets>
-    <targetConfigs>
-        <targetConfig targets="lightningCommunity__Default">
-            <property
-        name="recordId"
-        type="String"
-        label="Record ID"
-        default="{!recordId}"
-        description="The value should be {!recordId}."
-      />
-            <property
-        name="appName"
-        type="String"
-        default="画像アップロード"
-        required="true"
-        label="カスタムコンポーネント表示ラベル"
-      />
-            <property
-        name="pageSize"
-        type="Integer"
-        default="10"
-        min="1"
-        max="50"
-        required="true"
-        label="1ページ内の表示件数"
-      />
-            <property
-        name="sortFieldApi"
-        type="String"
-        default="LastModifiedDate"
-        label="並び替え項目名(API)"
-        datasource="apex://RSIUC_getContentDocumentFieldForOption"
-      />
-            <property name="defaultSort" type="String" default="降順" label="並替え順" datasource="昇順,降順" />
-            <property
-        name="targetUrlField"
-        type="String"
-        default="なし"
-        label="自動登録URLフィールド"
-        datasource="apex://RSIUC_getUrlFieldForOption"
-      />
-            <property
-        name="selectedSvgIconType"
-        type="String"
-        default="リスト表示"
-        label="デフォルトのリストタイプ"
-        datasource="最大表示,リスト表示"
-      />
-            <property
-        name="acceptedFormatList"
-        type="String"
-        default="jpg,jpeg,png,ppt,pptx,xls,xlsx,doc,docx,pdf"
-        label="アップロードを許可する拡張子"
-      />
-            <property name="isHideUpload" type="Boolean" default="false" label="ファイルアップロードを非表示にする" />
-            <property name="isHideSearchArea" type="Boolean" default="false" label="検索エリアを非表示にする" />
-            <property name="isHideFileEdit" type="Boolean" default="false" label="ファイル選択のボタンを非表示にする" />
-            <property name="isHideDelete" type="Boolean" default="false" label="削除ボタンを非表示にする" />
-            <property name="isHideUrlItem" type="Boolean" default="false" label="URL保存項目の設定を非表示にする" />
-            <property
-        name="isHideEditNameModal"
-        type="Boolean"
-        default="false"
-        label="ファイル名変更の設定を無効にする"
-      />
-        </targetConfig>
-    </targetConfigs>
+  <apiVersion>50.0</apiVersion>
+  <isExposed>true</isExposed>
+  <masterLabel>Image Uploader</masterLabel>
+  <targets>
+    <target>lightningCommunity__Page</target>
+    <target>lightningCommunity__Default</target>
+  </targets>
+  <targetConfigs>
+    <targetConfig targets="lightningCommunity__Default">
+      <property name="recordId" type="String" label="Record ID" default="{!recordId}" description="The value should be {!recordId}." />
+      <property name="appName" type="String" default="Image Uploader" required="true" label="Component Label" />
+      <property name="pageSize" type="Integer" default="10" min="1" max="50" required="true" label="Number of items displayed in a page" />
+      <!--property name="sortFieldApi" type="String" default="LastModifiedDate" label="Sort By" datasource="apex://RSIUC_getContentDocumentFieldForOption" /-->
+      <property name="sortFieldApi" type="String" default="LastModifiedDate" label="Sort By" datasource="LastModifiedDate,OwnerId,Title,FileExtension" />
+      <property name="defaultSort" type="String" default="Descending order" label="Sort Order" datasource="Ascending order,Descending order" />
+      <!--property name="targetUrlField" type="String" default="なし" label="Specifying URL fields to be registered automatically" datasource="apex://RSIUC_getUrlFieldForOption" /-->
+      <property name="targetUrlField" type="String" default="" label="Specifying URL fields to be registered automatically" />
+      <property name="selectedSvgIconType" type="String" default="Small" label="Default List Type" datasource="Large,Small" />
+      <property name="acceptedFormatList" type="String" default="jpg,jpeg,png,ppt,pptx,xls,xlsx,doc,docx,pdf" label="Extensions to allow in Components" />
+      <property name="isHideUpload" type="Boolean" default="false" label="Hide File Uploads" />
+      <property name="isHideSearchArea" type="Boolean" default="false" label="Hide Search Area" />
+      <property name="isHideFileEdit" type="Boolean" default="false" label="Hide File selection button" />
+      <property name="isHideDelete" type="Boolean" default="false" label="Hide Delete button" />
+      <property name="isHideUrlItem" type="Boolean" default="false" label="Hide URL saving item setting" />
+      <property name="isHideShareButton" type="Boolean" default="false" label="Hide Share button" />
+      <property name="isHideEditNameModal" type="Boolean" default="false" label="Disable file rename setting" />
+    </targetConfig>
+  </targetConfigs>
 </LightningComponentBundle>

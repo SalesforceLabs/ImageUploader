@@ -11,11 +11,24 @@ import URLITEM_FIELD from '@salesforce/schema/ContentDocument.LatestPublishedVer
 import { reduceErrors } from 'c/rsiuc_Utils';
 import { showToast } from 'c/rsiuc_Utils';
 
+import UrlSettingModal_Close from '@salesforce/label/c.UrlSettingModal_Close';
+import UrlSettingModal_UrlField from '@salesforce/label/c.UrlSettingModal_UrlField';
+import UrlSettingModal_OptionAreaHelp from '@salesforce/label/c.UrlSettingModal_OptionAreaHelp';
+import UrlSettingModal_CancelButton from '@salesforce/label/c.UrlSettingModal_CancelButton';
+import UrlSettingModal_FinishButton from '@salesforce/label/c.UrlSettingModal_FinishButton';
+
 export default class Rsiuc_UrlSettingModal extends LightningElement {
   showModal = false;
   isLoaded = false;
   error;
   URLITEM_FIELD = 'URL_item__c';
+  label = {
+    UrlSettingModal_Close,
+    UrlSettingModal_UrlField,
+    UrlSettingModal_OptionAreaHelp,
+    UrlSettingModal_CancelButton,
+    UrlSettingModal_FinishButton,
+  };
   @api objectApiName;
   @api recordId;
   @api communityId;
@@ -24,7 +37,7 @@ export default class Rsiuc_UrlSettingModal extends LightningElement {
   @track options = [];
   layoutSettings = {
     imageBlock: 3,
-    infoBlock: 9
+    infoBlock: 9,
   };
 
   connectedCallback() {
@@ -53,7 +66,7 @@ export default class Rsiuc_UrlSettingModal extends LightningElement {
       versionId: this.image.ContentDocument.LatestPublishedVersionId,
       oldField: this.image.ContentDocument.LatestPublishedVersion[this.URLITEM_FIELD],
       newField: this.image.newUrlItem,
-      communityUrl: this.communityBaseUrl
+      communityUrl: this.communityBaseUrl,
     })
       .then((result) => {
         if (result) {
@@ -91,7 +104,7 @@ export default class Rsiuc_UrlSettingModal extends LightningElement {
       newOptions.push({
         label: val.label,
         value: val.value,
-        selected: val.value == image.ContentDocument.LatestPublishedVersion[this.URLITEM_FIELD]
+        selected: val.value == image.ContentDocument.LatestPublishedVersion[this.URLITEM_FIELD],
       });
     }
     this.options = newOptions;

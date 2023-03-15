@@ -10,7 +10,16 @@ import { loadScript, loadStyle } from 'lightning/platformResourceLoader';
 import swiperResource from '@salesforce/resourceUrl/RSIUC_ImageUpload';
 import { showToast, getPreviewUrlFromFileType, getFileIconFromFileTypeAndStaticResource } from 'c/rsiuc_Utils';
 
+import ImageCarouselModal_VideoError from '@salesforce/label/c.ImageCarouselModal_VideoError';
+import ImageCarouselModal_AudioError from '@salesforce/label/c.ImageCarouselModal_AudioError';
+import ImageCarouselModal_Close from '@salesforce/label/c.ImageCarouselModal_Close';
+
 export default class Rsiuc_ImageCarouselModal extends LightningElement {
+  label = {
+    ImageCarouselModal_VideoError,
+    ImageCarouselModal_AudioError,
+    ImageCarouselModal_Close,
+  };
   showModal = false;
   @api recordId;
   @api images = {};
@@ -34,7 +43,7 @@ export default class Rsiuc_ImageCarouselModal extends LightningElement {
     // invoke the method when component rendered or loaded
     Promise.all([
       loadStyle(this, swiperResource + '/SwiperJS/swiper-bundle.css'), // CSS File
-      loadScript(this, swiperResource + '/SwiperJS/swiper-bundle.js') // JS file
+      loadScript(this, swiperResource + '/SwiperJS/swiper-bundle.js'), // JS file
     ])
       .then(() => {
         // Call back function if scripts loaded successfully
@@ -43,7 +52,7 @@ export default class Rsiuc_ImageCarouselModal extends LightningElement {
         }
       })
       .catch((error) => {
-        showToast(this, 'エラー', error.message, 'error');
+        showToast(this, 'Error', error.message, 'error');
       });
   }
 
@@ -54,12 +63,12 @@ export default class Rsiuc_ImageCarouselModal extends LightningElement {
     this.swiper = new Swiper(this.template.querySelector('.swiper-container'), {
       init: false,
       lazy: {
-        loadOnTransitionStart: true
+        loadOnTransitionStart: true,
       },
       initialSlide: this.initialSlide,
       navigation: {
         nextEl: this.template.querySelector('.swiper-button-next'),
-        prevEl: this.template.querySelector('.swiper-button-prev')
+        prevEl: this.template.querySelector('.swiper-button-prev'),
       },
       on: {
         transitionStart: () => {
@@ -71,8 +80,8 @@ export default class Rsiuc_ImageCarouselModal extends LightningElement {
           videos.forEach((video) => {
             video.pause();
           });
-        }
-      }
+        },
+      },
     });
     this.swiper.on('init', () => {
       this.getImagesList(offset, false, false);
@@ -106,7 +115,7 @@ export default class Rsiuc_ImageCarouselModal extends LightningElement {
         let prependArray = [];
         let appendArray = [];
         result.forEach((item) => {
-          let imageType = item.ContentDocument.FileType.toLowerCase() == 'pdf' && (this.communityId && this.isMobile) ? 'pdf-mobile' : null;
+          let imageType = item.ContentDocument.FileType.toLowerCase() == 'pdf' && this.communityId && this.isMobile ? 'pdf-mobile' : null;
           let imageUrl = getPreviewUrlFromFileType(item.ContentDocument.FileType, item.ContentDocument.LatestPublishedVersionId, item.ContentDocumentId, this.communityBaseUrl, imageType);
           let htmlContent = this.generateDivSwiper(imageUrl, item.ContentDocument.Title, item.ContentDocument.FileType);
           if (isBegin && !isEnd) {
@@ -170,13 +179,13 @@ export default class Rsiuc_ImageCarouselModal extends LightningElement {
       imageTypeClass = 'video';
       contentTag = `
         <video controls muted buffered class="swiper-video" src="${imageUrl}">
-         このブラウザーは埋め込み映像に対応していません。
+         ${this.label.ImageCarouselModal_VideoError}
         </video>`;
     } else if (/mp3|aac|wav|wma/i.test(fileType)) {
       imageTypeClass = 'audio';
       contentTag = `
         <audio controls muted class="swiper-audio" src="${imageUrl}">
-          このブラウザーは音声再生に対応していません。
+          ${this.label.ImageCarouselModal_AudioError}
          <code>audio</code>
         </audio>`;
     } else if (/pdf/i.test(fileType) && !(this.communityId && this.isMobile)) {

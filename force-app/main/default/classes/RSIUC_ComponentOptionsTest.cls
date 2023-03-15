@@ -7,40 +7,45 @@
 
 @isTest
 public with sharing class RSIUC_ComponentOptionsTest {
-    @isTest static void getContentDocumentFieldForOptionTest() {
-        RSIUC_getContentDocumentFieldForOption contentDocumentFieldForOption = new RSIUC_getContentDocumentFieldForOption();
-        VisualEditor.DynamicPickListRows getValuesResult =  contentDocumentFieldForOption.getValues();
-        VisualEditor.DataRow getDefaultValueResult = contentDocumentFieldForOption.getDefaultValue();
-        String checkValue = 'LastModifiedDate';
-        String conteinsValue = '';
+  @isTest
+  static void getContentDocumentFieldForOptionTest() {
+    VisualEditor.DesignTimePageContext context = new VisualEditor.DesignTimePageContext();
+    context.entityName = 'ContentDocument';
 
-        for (VisualEditor.DataRow row : getValuesResult.getDataRows()) {
-            if (checkValue.equals((String)row.getValue())) {
-                conteinsValue = (String)row.getValue();
-            }
-        }
+    RSIUC_getContentDocumentFieldForOption contentDocumentFieldForOption = new RSIUC_getContentDocumentFieldForOption(context);
+    VisualEditor.DynamicPickListRows getValuesResult = contentDocumentFieldForOption.getValues();
+    VisualEditor.DataRow getDefaultValueResult = contentDocumentFieldForOption.getDefaultValue();
+    String checkValue = 'LastModifiedDate';
+    String conteinsValue = '';
 
-        System.assert(conteinsValue == checkValue);
-        System.assert(getDefaultValueResult.getValue() == checkValue);
+    for (VisualEditor.DataRow row : getValuesResult.getDataRows()) {
+      if (checkValue.equals((String) row.getValue())) {
+        conteinsValue = (String) row.getValue();
+      }
     }
 
-    @isTest static void getUrlFieldForOptionTest() {
-        VisualEditor.DesignTimePageContext context = new VisualEditor.DesignTimePageContext();
-        context.entityName = 'Account';
+    System.assert(conteinsValue == checkValue);
+    System.assert(getDefaultValueResult.getValue() == checkValue);
+  }
 
-        RSIUC_getUrlFieldForOption urlFieldForOption = new RSIUC_getUrlFieldForOption(context);
-        VisualEditor.DynamicPickListRows getValuesResult =  urlFieldForOption.getValues();
-        VisualEditor.DataRow getDefaultValueResult = urlFieldForOption.getDefaultValue();
-        String checkValue = 'なし';
-        String conteinsValue = '';
+  @isTest
+  static void getUrlFieldForOptionTest() {
+    VisualEditor.DesignTimePageContext context = new VisualEditor.DesignTimePageContext();
+    context.entityName = 'Account';
 
-        for (VisualEditor.DataRow row : getValuesResult.getDataRows()) {
-            if (checkValue.equals((String)row.getLabel())) {
-                conteinsValue = (String)row.getLabel();
-            }
-        }
+    RSIUC_getUrlFieldForOption urlFieldForOption = new RSIUC_getUrlFieldForOption(context);
+    VisualEditor.DynamicPickListRows getValuesResult = urlFieldForOption.getValues();
+    VisualEditor.DataRow getDefaultValueResult = urlFieldForOption.getDefaultValue();
+    String checkValue = 'None';
+    String conteinsValue = '';
 
-        System.assert(conteinsValue == checkValue);
-        System.assert(getDefaultValueResult.getLabel() == checkValue);
+    for (VisualEditor.DataRow row : getValuesResult.getDataRows()) {
+      if (checkValue.equals((String) row.getLabel())) {
+        conteinsValue = (String) row.getLabel();
+      }
     }
+
+    System.assert(conteinsValue == checkValue);
+    System.assert(getDefaultValueResult.getLabel() == checkValue);
+  }
 }

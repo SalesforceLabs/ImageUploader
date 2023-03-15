@@ -6,7 +6,15 @@
  */
 import { LightningElement, api, track } from 'lwc';
 
+import Paginator_Prev from '@salesforce/label/c.Paginator_Prev';
+import Paginator_Next from '@salesforce/label/c.Paginator_Next';
+
 export default class Rsiuc_Paginator extends LightningElement {
+  label = {
+    Paginator_Prev,
+    Paginator_Next,
+  };
+
   @api
   changeView(str) {
     if (str === 'disablePrevious') {

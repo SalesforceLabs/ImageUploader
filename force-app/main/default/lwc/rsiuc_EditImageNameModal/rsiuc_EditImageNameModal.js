@@ -9,7 +9,22 @@ import getImagesByContentDocumentIds from '@salesforce/apex/RSIUC_ImageUploadCon
 import updateContentDocumentName from '@salesforce/apex/RSIUC_ImageUploadController.updateContentDocumentName';
 import { generateInfoTextForImage, getPreviewUrlFromFileType, getDefaultIconFromFileType, formatBytes } from 'c/rsiuc_Utils';
 
+import EditImageNameModal_TryAgain from '@salesforce/label/c.EditImageNameModal_TryAgain';
+import EditImageNameModal_Close from '@salesforce/label/c.EditImageNameModal_Close';
+import EditImageNameModal_ChangeFileName from '@salesforce/label/c.EditImageNameModal_ChangeFileName';
+import EditImageNameModal_FileName from '@salesforce/label/c.EditImageNameModal_FileName';
+import EditImageNameModal_CancelButton from '@salesforce/label/c.EditImageNameModal_CancelButton';
+import EditImageNameModal_FinishButton from '@salesforce/label/c.EditImageNameModal_FinishButton';
+
 export default class rsiuc_EditImageNameModal extends LightningElement {
+  label = {
+    EditImageNameModal_TryAgain,
+    EditImageNameModal_Close,
+    EditImageNameModal_ChangeFileName,
+    EditImageNameModal_FileName,
+    EditImageNameModal_CancelButton,
+    EditImageNameModal_FinishButton,
+  };
   showModal = false;
   @track images = {};
   @api recordId;
@@ -20,7 +35,7 @@ export default class rsiuc_EditImageNameModal extends LightningElement {
   isLoaded = false;
   layoutSettings = {
     imageBlock: 2,
-    infoBlock: 10
+    infoBlock: 10,
   };
 
   //Executes on the page load
@@ -55,7 +70,7 @@ export default class rsiuc_EditImageNameModal extends LightningElement {
   handleSaveClick() {
     let allValid = this.validateInput();
     if (!allValid) {
-      alert('有効な値を入力してからもう一度試してください。');
+      alert(this.label.EditImageNameModal_TryAgain);
       return;
     }
 

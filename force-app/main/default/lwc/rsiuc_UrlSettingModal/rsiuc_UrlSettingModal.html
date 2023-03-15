@@ -5,88 +5,73 @@
  * For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  -->
 <template>
-    <template if:true={showModal}>
+  <template if:true={showModal}>
     <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_medium" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1">
-        <div class="slds-modal__container">
-          <header class="slds-modal__header">
-            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="閉じる" onclick={closeModal}>
-                <lightning-icon icon-name="utility:close"
-                    alternative-text="閉じる"
-                    variant="inverse"
-                    size="small" ></lightning-icon>
-                <span class="slds-assistive-text">閉じる</span>
-            </button>
-            <h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">URL保存項目設定</h2>
-          </header>
-          <div class="slds-modal__content slds-var-p-around_medium" id="modal-content-id-1">
-            <div if:true={isLoaded}>
-                <lightning-spinner
-                    alternative-text="Loading...">
-                </lightning-spinner>
-            </div>
-            <template if:true={error}>
-                {error}
-            </template>
-            <template if:true={image}>
-                <lightning-layout horizontal-align="spread" class="image-item">
-                    <lightning-layout-item size={layoutSettings.imageBlock} padding="around-small" class="image-item__image slds-align_absolute-center">
-                        <template if:true={image.imageError}>
-                            <lightning-icon icon-name={image.defaultIcon} size="large"></lightning-icon>
-                        </template>
-                        <template if:false={image.imageError}>
-                            <img src={image.imageUrl} onerror={handleImageError}/>
-                        </template>
-                    </lightning-layout-item>
-                    <lightning-layout-item size={layoutSettings.infoBlock} padding="around-small" class="image-info">
-                        <lightning-layout multiple-rows="true">
-                            <lightning-layout-item size="12">
-                                <a href={image.contentIdUrl} target="_blank" rel="noopener noreferrer">{image.ContentDocument.Title}</a>
-                            </lightning-layout-item>
-                            <lightning-layout-item size="12">
-                                <lightning-formatted-date-time
-                                    value={image.ContentDocument.LastModifiedDate}
-                                    year="numeric"
-                                    day="2-digit"
-                                    month="long"
-                                    hour="2-digit"
-                                    minute="2-digit">
-                                </lightning-formatted-date-time>
-                                <span class="slds-var-p-horizontal_xxx-small">/</span>
-                                <span>{image.contentSize}</span>
-                                <span class="slds-var-p-horizontal_xxx-small">/</span>
-                                <span>{image.fileExtension}</span>
-                            </lightning-layout-item>
-                            <lightning-layout-item size="12">
-                                <div class="slds-form-element">
-                                    <label class="slds-form-element__label" for="option-area">ファイルのURLを格納する項目を選択してください。</label>
-                                    <div class="slds-form-element__control">
-                                        <div class="slds-select_container">
-                                            <select class="slds-select" id="option-area" onchange={handleChangeUrlItem}>
-                                            <template for:each={options} for:item="option">
-                                                <template if:true={option.selected}>
-                                                <option key={option.value} value={option.value} selected>{option.label}</option>
-                                                </template>
-                                                <template if:false={option.selected}>
-                                                <option key={option.value} value={option.value}>{option.label}</option>
-                                                </template>
-                                            </template>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                            </lightning-layout-item>
-                        </lightning-layout>
-                    </lightning-layout-item>
-                </lightning-layout>
-            </template>
+      <div class="slds-modal__container">
+        <header class="slds-modal__header">
+          <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title={label.UrlSettingModal_Close} onclick={closeModal}>
+            <lightning-icon icon-name="utility:close" alternative-text={label.UrlSettingModal_Close} variant="inverse" size="small"></lightning-icon>
+            <span class="slds-assistive-text">{label.UrlSettingModal_Close}</span>
+          </button>
+          <h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">{label.UrlSettingModal_UrlField}</h2>
+        </header>
+        <div class="slds-modal__content slds-var-p-around_medium" id="modal-content-id-1">
+          <div if:true={isLoaded}>
+            <lightning-spinner alternative-text="Loading..."> </lightning-spinner>
           </div>
-          <footer class="slds-modal__footer">
-            <lightning-button variant="neutral" label="キャンセル" onclick={closeModal} ></lightning-button>
-            <lightning-button variant="brand" label="完了" onclick={handleSaveClick}
-            class="slds-var-m-left_x-small"></lightning-button>
-          </footer>
+          <template if:true={error}> {error} </template>
+          <template if:true={image}>
+            <lightning-layout horizontal-align="spread" class="image-item">
+              <lightning-layout-item size={layoutSettings.imageBlock} padding="around-small" class="image-item__image slds-align_absolute-center">
+                <template if:true={image.imageError}>
+                  <lightning-icon icon-name={image.defaultIcon} size="large"></lightning-icon>
+                </template>
+                <template if:false={image.imageError}>
+                  <img src={image.imageUrl} onerror={handleImageError} />
+                </template>
+              </lightning-layout-item>
+              <lightning-layout-item size={layoutSettings.infoBlock} padding="around-small" class="image-info">
+                <lightning-layout multiple-rows="true">
+                  <lightning-layout-item size="12">
+                    <a href={image.contentIdUrl} target="_blank" rel="noopener noreferrer">{image.ContentDocument.Title}</a>
+                  </lightning-layout-item>
+                  <lightning-layout-item size="12">
+                    <lightning-formatted-date-time value={image.ContentDocument.LastModifiedDate} year="numeric" day="2-digit" month="short" hour="2-digit" minute="2-digit"> </lightning-formatted-date-time>
+                    <span class="slds-var-p-horizontal_xxx-small">/</span>
+                    <span>{image.contentSize}</span>
+                    <span class="slds-var-p-horizontal_xxx-small">/</span>
+                    <span>{image.fileExtension}</span>
+                  </lightning-layout-item>
+                  <lightning-layout-item size="12">
+                    <div class="slds-form-element">
+                      <label class="slds-form-element__label" for="option-area">{label.UrlSettingModal_OptionAreaHelp}</label>
+                      <div class="slds-form-element__control">
+                        <div class="slds-select_container">
+                          <select class="slds-select" id="option-area" onchange={handleChangeUrlItem}>
+                            <template for:each={options} for:item="option">
+                              <template if:true={option.selected}>
+                                <option key={option.value} value={option.value} selected>{option.label}</option>
+                              </template>
+                              <template if:false={option.selected}>
+                                <option key={option.value} value={option.value}>{option.label}</option>
+                              </template>
+                            </template>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </lightning-layout-item>
+                </lightning-layout>
+              </lightning-layout-item>
+            </lightning-layout>
+          </template>
         </div>
-      </section>
-      <div class="slds-backdrop slds-backdrop_open"></div>
-    </template>
+        <footer class="slds-modal__footer">
+          <lightning-button variant="neutral" label={label.UrlSettingModal_CancelButton} onclick={closeModal}></lightning-button>
+          <lightning-button variant="brand" label={label.UrlSettingModal_FinishButton} onclick={handleSaveClick} class="slds-var-m-left_x-small"></lightning-button>
+        </footer>
+      </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open"></div>
+  </template>
 </template>

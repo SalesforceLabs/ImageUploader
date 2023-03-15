@@ -6,9 +6,9 @@
  * For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  -->
 <LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
-    <apiVersion>49.0</apiVersion>
+    <apiVersion>50.0</apiVersion>
     <isExposed>true</isExposed>
-    <masterLabel>Image Uploader (パーツのため使用不可)</masterLabel>
+    <masterLabel>(パーツのため使用不可)  Uploader</masterLabel>
     <targets>
         <target>lightning__RecordPage</target>
     </targets>
